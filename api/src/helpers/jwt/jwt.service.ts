@@ -23,7 +23,7 @@ export class JwtService {
         try {
             return jwt.verify(token, this.secret) as ITokenStructure;
         } catch (err) {
-            throw new UnauthorizedException("JWT.VERIFIED_WITH_ERROR");
+            throw new UnauthorizedException("Jwt verified with errors");
         }
     }
 }

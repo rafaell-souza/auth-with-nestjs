@@ -13,19 +13,25 @@ enum Account {
 }
 
 model User {
-  id           String    @unique @db.VarChar(36)
-  firstName    String    @db.VarChar(40)
-  lastName     String    @db.VarChar(40)
-  email        String    @unique @db.VarChar(100)
-  password     String?   @db.VarChar(12)
+  id           String      @unique @db.VarChar(36)
+  firstName    String      @db.VarChar(40)
+  lastName     String      @db.VarChar(40)
+  email        String      @unique @db.VarChar(100)
+  password     String?     @db.VarChar(12)
   lastLogOutAt DateTime?
   type         Account
-  checked      Boolean   @default(false)
+  checked      Boolean     @default(false)
   createdAt    DateTime
   updatedAt    DateTime
+
+  authCache    AuthCache[]
 }
 
 model AuthCache {
-  id          Int     @id @unique @default(autoincrement())
-  otpCodeHash String? @db.VarChar(6)
+  id       Int     @id @unique @default(autoincrement())
+  hashedVt String? @db.Text
+  hashedRt String? @db.Text
+
+  userId String @unique @db.VarChar(36)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

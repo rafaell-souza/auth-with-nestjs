@@ -21,7 +21,7 @@ describe("JwtService", () => {
         try { jwtService.verifyToken("token"); }
         catch (err) {
             expect(err).toBeInstanceOf(UnauthorizedException);
-            expect(err.message).toBe("JWT.VERIFIED_WITH_ERROR")
+            expect(err.message).toBe("Jwt verified with errors")
         }
     })
 })
