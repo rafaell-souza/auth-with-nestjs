@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Account {
+  google_oauth_account
+  local_auth_account
+}
+
+model User {
+  id           String    @unique @db.VarChar(36)
+  firstName    String    @db.VarChar(40)
+  lastName     String    @db.VarChar(40)
+  email        String    @unique @db.VarChar(100)
+  password     String?   @db.VarChar(12)
+  lastLogOutAt DateTime?
+  type         Account
+  checked      Boolean   @default(false)
+  createdAt    DateTime
+  updatedAt    DateTime
+}
+
+model AuthCache {
+  id          Int     @id @unique @default(autoincrement())
+  otpCodeHash String? @db.VarChar(6)
+}
