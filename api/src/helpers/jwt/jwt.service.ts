@@ -11,7 +11,7 @@ export class JwtService {
     createToken(data: ICreateToken): string {
         const accessToken = jwt.sign({
             id: data.id,
-            name: `${data.firstName} ${data.lastName}`,
+            name: data.name,
             email: data.email,
             iat: Math.floor(Date.now() / 1000)
         }, this.secret)

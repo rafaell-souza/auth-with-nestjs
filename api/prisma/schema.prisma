@@ -13,18 +13,18 @@ enum Account {
 }
 
 model User {
-  id           String      @unique @db.VarChar(36)
-  firstName    String      @db.VarChar(40)
-  lastName     String      @db.VarChar(40)
-  email        String      @unique @db.VarChar(100)
-  password     String?     @db.VarChar(12)
+  id           String    @unique @db.VarChar(36)
+  firstName    String    @db.VarChar(40)
+  lastName     String    @db.VarChar(40)
+  email        String    @unique @db.VarChar(100)
+  password     String?   @db.VarChar(60)
   lastLogOutAt DateTime?
   type         Account
-  checked      Boolean     @default(false)
-  createdAt    DateTime
-  updatedAt    DateTime
+  checked      Boolean?  @default(false)
+  createdAt    DateTime? @default(now())
+  updatedAt    DateTime?
 
-  authCache    AuthCache[]
+  authCache AuthCache[]
 }
 
 model AuthCache {

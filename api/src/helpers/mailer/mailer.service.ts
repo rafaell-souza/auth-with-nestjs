@@ -26,13 +26,11 @@ export class MailerService {
     async send(data: IMailer, templateName: string) {
         const templateHtml = this.loadTemplate(templateName, data.name, data.hashedVt);
 
-        const sent = await transporter.sendMail({
+        await transporter.sendMail({
             from: "dev project <noreply@example.com>",
             to: data.email,
             subject: data.subject,
             html: templateHtml,
         });
-
-        if (!sent) throw new BadGatewayException("Sending email failed");
     }
 }
