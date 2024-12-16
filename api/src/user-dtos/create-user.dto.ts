@@ -3,13 +3,13 @@ import { IsString, Matches, Length, IsEmail, MaxLength, IsNotEmpty } from "class
 export class CreateUsrDto {
     @IsNotEmpty()
     @IsString()
-    @Length(3, 50)
+    @Length(3, 40)
     @Matches(/^[\p{L}\s]+$/u)
     firstName: string;
 
     @IsNotEmpty()
     @IsString()
-    @Length(3, 50)
+    @Length(3, 40)
     @Matches(/^[\p{L}\s]+$/u)
     lastName: string;
 

@@ -1,7 +1,6 @@
 export interface ITokenStructure {
-    id: string;
+    sub: string;
     email: string;
     name: string;
     iat: number;
-    isVerified: boolean
 }

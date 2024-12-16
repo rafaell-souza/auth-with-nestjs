@@ -6,22 +6,32 @@ import { ITokenStructure } from "src/interfaces/itoken-structure";
 
 @Injectable()
 export class JwtService {
-    private readonly secret = process.env.JWT_SECRET;
+    private readonly tokenKey = process.env.TOKEN_KEY
+    private readonly vTokenKey = process.env.VTOKEN_KEY
 
     createToken(data: ICreateToken): string {
         const accessToken = jwt.sign({
-            id: data.id,
+            sub: data.id,
             name: data.name,
             email: data.email,
             iat: Math.floor(Date.now() / 1000)
-        }, this.secret)
+        }, this.tokenKey)
 
-        return accessToken;
+        return accessToken
     }
 
-    verifyToken(token: string): ITokenStructure | Error {
+    createVToken(userId: string): string {
+        const accessToken = jwt.sign({
+            sub: userId,
+            iat: Math.floor(Date.now() / 1000)
+        }, this.vTokenKey)
+
+        return accessToken
+    }
+
+    verifyToken(token: string, key: string): ITokenStructure | Error {
         try {
-            return jwt.verify(token, this.secret) as ITokenStructure;
+            return jwt.verify(token, key) as ITokenStructure;
         } catch (err) {
             throw new UnauthorizedException("Jwt verified with errors");
         }

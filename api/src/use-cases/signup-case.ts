@@ -20,13 +20,9 @@ export class SignupCase {
 
         if (user) throw new BadRequestException("User already signed up");
 
-        const verificationToken = this.jwtService.createToken({
-            id: data.id,
-            name: `${data.firstName} ${data.lastName}`,
-            email: data.email
-        })
+        const vToken = this.jwtService.createVToken(data.id);
+        const hasehdVToken = this.hashSrvice.hashData(vToken, this.salt);
 
-        const hashedToken = this.hashSrvice.hashData(verificationToken, this.salt);
         data.password = this.hashSrvice.hashData(data.password, this.salt);
 
         const newUser = await this.prisma.user.create({
@@ -39,7 +35,7 @@ export class SignupCase {
                 type: 'local_auth_account',
                 authCache: {
                     create: {
-                        hashedVt: hashedToken
+                        hashedVt: hasehdVToken
                     }
                 }
             },
@@ -51,7 +47,7 @@ export class SignupCase {
             }
         })
 
-        return { newUser, verificationToken };
+        return { newUser, vToken };
     }
 
     googleSignup() { }
