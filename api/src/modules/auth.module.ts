@@ -10,6 +10,7 @@ import { SendCase } from "src/use-cases/send-case";
 import { ConfirmUserCase } from "src/use-cases/confirm-case";
 import { ForgotPasswordCase } from "src/use-cases/forgot-password-case";
 import { Signincase } from "src/use-cases/signin-case";
+import { GoogleStrategy } from "src/helpers/strategies/google.strategy";
 
 @Module({
     controllers: [AuthController],
@@ -17,7 +18,7 @@ import { Signincase } from "src/use-cases/signin-case";
         AuthService, PrismaService, HashService, 
         JwtService, SignupCase, MailerService,
         SendCase, ConfirmUserCase, ForgotPasswordCase,
-        Signincase
+        Signincase, GoogleStrategy
     ]
 })
 export class AuthModule { }

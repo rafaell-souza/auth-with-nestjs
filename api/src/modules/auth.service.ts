@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { MailerService } from "src/helpers/mailer/mailer.service";
+import { IGoogleCreate } from "src/interfaces/IGoogle.-create";
 import { ISigninUser } from "src/interfaces/isignin-user";
 import { ISignupUser } from "src/interfaces/isignup-user";
 import { ConfirmUserCase } from "src/use-cases/confirm-case";
@@ -35,6 +36,10 @@ export class AuthService {
     async signin(dto: ISigninUser) {
         const accessToken = await this.signinCase.signin(dto);
         return accessToken
+    }
+
+    async googleCallback(data: IGoogleCreate) {
+        return await this.signupCase.googleSignup(data);
     }
 
     async send(templateName: string, email: string) {

@@ -6,6 +6,7 @@ import { LoginUserDto } from "src/user-dtos/login-user.dto";
 import { EmailDto } from "src/user-dtos/email.dto";
 import { ForgotPasswordDto } from "src/user-dtos/forgot-password.dto";
 import { VerificationGuard } from "src/guards/VerificationGuard.guard";
+import { GoogleOAuthGuard } from "src/guards/google-oauth.guard";
 
 @Controller("auth")
 export class AuthController {
@@ -26,6 +27,19 @@ export class AuthController {
     @Post("signin")
     async signin(@Body() dto: LoginUserDto) {
         const token = await this.authService.signin(dto);
+        return { accessToken: token };
+    }
+
+    @Get("google/auth")
+    @UseGuards(GoogleOAuthGuard)
+    async googleAuth(@Request() request: any) { }
+
+    @Get("google/callback")
+    @UseGuards(GoogleOAuthGuard)
+    async googleCallback(@Request() request: any) {
+        const token = await this.authService.googleCallback({
+            id: uuid(), ...request.user
+        })
         return { accessToken: token };
     }
 

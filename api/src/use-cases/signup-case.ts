@@ -3,6 +3,7 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { ISignupUser } from "src/interfaces/isignup-user";
 import { HashService } from "src/helpers/hashing/hash.service";
 import { JwtService } from "src/helpers/jwt/jwt.service";
+import { IGoogleCreate } from "src/interfaces/IGoogle.-create";
 
 @Injectable()
 export class SignupCase {
@@ -50,5 +51,34 @@ export class SignupCase {
         return { newUser, vToken };
     }
 
-    googleSignup() { }
+    async googleSignup(data: IGoogleCreate) {
+        const user = await this.prisma.user.findUnique({
+            where: { email: data.email }
+        })
+
+        if (user) {
+            const newAccessToken = this.jwtService.createToken({
+                name: `${data.firstName} ${data.lastName}`,
+                email: data.email,
+                id: data.id
+            })
+            return newAccessToken;
+        }
+
+        await this.prisma.user.create({
+            data: {
+                ...data,
+                type: "google_oauth_account",
+                checked: true,
+                authCache: { create: {} }
+            }
+        })
+
+        const accessToken = this.jwtService.createToken({
+            name: `${data.firstName} ${data.lastName}`,
+            email: data.email,
+            id: data.id
+        })
+        return accessToken;
+    }
 }
