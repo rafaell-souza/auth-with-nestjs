@@ -7,6 +7,7 @@ import { EmailDto } from "src/user-dtos/email.dto";
 import { ForgotPasswordDto } from "src/user-dtos/forgot-password.dto";
 import { VerificationGuard } from "src/guards/VerificationGuard.guard";
 import { GoogleOAuthGuard } from "src/guards/google-oauth.guard";
+import { Throttle } from "@nestjs/throttler";
 
 @Controller("auth")
 export class AuthController {
@@ -43,6 +44,7 @@ export class AuthController {
         return { accessToken: token };
     }
 
+    @Throttle({ default: { limit: 6, ttl: 36000 } })
     @Get("verification/send/:templateName")
     async send(
         @Param("templateName") templateName: string,
@@ -55,6 +57,7 @@ export class AuthController {
         return { success: true, date: new Date() }
     }
 
+    @Throttle({ default: { limit: 3, ttl: 60000 } })
     @Put("verification/confirm")
     @UseGuards(VerificationGuard)
     async confirmUser(@Request() request: any) {
@@ -63,6 +66,7 @@ export class AuthController {
         return { success: true, date: new Date() }
     }
 
+    @Throttle({ default: { limit: 3, ttl: 600000 } })
     @Put("forgot-password")
     @UseGuards(VerificationGuard)
     async forgotPassword(

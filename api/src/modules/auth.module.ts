@@ -15,7 +15,7 @@ import { GoogleStrategy } from "src/helpers/strategies/google.strategy";
 @Module({
     controllers: [AuthController],
     providers: [
-        AuthService, PrismaService, HashService, 
+        AuthService, PrismaService, HashService,
         JwtService, SignupCase, MailerService,
         SendCase, ConfirmUserCase, ForgotPasswordCase,
         Signincase, GoogleStrategy
