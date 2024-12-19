@@ -1,5 +1,5 @@
 import { PrismaService } from "src/prisma/prisma.service";
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 import { ISignupUser } from "src/interfaces/isignup-user";
 import { HashService } from "src/helpers/hashing/hash.service";
 import { JwtService } from "src/helpers/jwt/jwt.service";
@@ -19,7 +19,7 @@ export class SignupCase {
             where: { email: data.email }
         })
 
-        if (user) throw new BadRequestException("User already signed up");
+        if (user) throw new ConflictException("User already signed up");
 
         const vToken = this.jwtService.createVToken(data.id);
         const hasehdVToken = this.hashSrvice.hashData(vToken, this.salt);

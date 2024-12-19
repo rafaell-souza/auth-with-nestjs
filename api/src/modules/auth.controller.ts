@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, Param, Post, Put, Req, Request, Res, UseGuards } from "@nestjs/common";
 import { CreateUsrDto } from "src/user-dtos/create-user.dto";
 import { v4 as uuid } from "uuid";
 import { AuthService } from "./auth.service";
@@ -8,6 +8,7 @@ import { ForgotPasswordDto } from "src/user-dtos/forgot-password.dto";
 import { VerificationGuard } from "src/guards/VerificationGuard.guard";
 import { GoogleOAuthGuard } from "src/guards/google-oauth.guard";
 import { Throttle } from "@nestjs/throttler";
+import { Response } from "express";
 
 @Controller("auth")
 export class AuthController {
@@ -21,8 +22,12 @@ export class AuthController {
     @Post("signup")
     async signup(@Body() dto: CreateUsrDto) {
         dto.password = dto.password.trim();
-        await this.authService.signup({ id: uuid(), ...dto });
-        return { success: true, date: new Date() }
+        const result = await this.authService.signup({ id: uuid(), ...dto });
+        return {
+            success: true,
+            email: result.email,
+            date: new Date()
+        }
     }
 
     @Post("signin")
@@ -37,11 +42,14 @@ export class AuthController {
 
     @Get("google/callback")
     @UseGuards(GoogleOAuthGuard)
-    async googleCallback(@Request() request: any) {
+    async googleCallback(
+        @Res() res: Response,
+        @Req() req: any
+    ) {
         const token = await this.authService.googleCallback({
-            id: uuid(), ...request.user
+            id: uuid(), ...req.user
         })
-        return { accessToken: token };
+        return res.redirect(`http://localhost:5173/token=${token}`)
     }
 
     @Throttle({ default: { limit: 6, ttl: 36000 } })
