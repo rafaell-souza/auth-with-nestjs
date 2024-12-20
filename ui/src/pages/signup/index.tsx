@@ -108,7 +108,11 @@ export const SignupPage = () => {
                 </div>
 
                 <p className="text-xs flex justify-end">
-                    <Link className="text-blue-700 hover:text-blue-400" to="reset-password">Forgot password</Link>
+                    <Link
+                        to="/signin"
+                        className="text-blue-700 mt-[2px] text-[10px] hover:text-blue-400">
+                        Already have an account?
+                    </Link>
                 </p>
 
                 <button className="w-full bg-zinc-400 text-white hover:bg-opacity-70 h-7 mt-2 rounded">

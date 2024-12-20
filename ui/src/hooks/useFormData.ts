@@ -31,7 +31,8 @@ export const useFormData = <T extends FieldValues>(
         handleSubmit,
         formState: { errors }
     } = useForm<T>({
-        resolver: zodResolver(schema)
+        resolver: zodResolver(schema),
+        mode: "onChange"
     });
 
     const handleSubmitForm = handleSubmit(async data => {
