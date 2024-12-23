@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Put, Req, Request, Res, UseGuards } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, HttpCode, Param, Post, Put, Req, Request, Res, UseGuards } from "@nestjs/common";
 import { CreateUsrDto } from "src/user-dtos/create-user.dto";
 import { v4 as uuid } from "uuid";
 import { AuthService } from "./auth.service";
@@ -53,7 +53,8 @@ export class AuthController {
     }
 
     @Throttle({ default: { limit: 6, ttl: 36000 } })
-    @Get("verification/send/:templateName")
+    @HttpCode(200)
+    @Post("verification/send/:templateName")
     async send(
         @Param("templateName") templateName: string,
         @Body() dto: EmailDto

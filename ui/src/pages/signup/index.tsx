@@ -15,7 +15,7 @@ export const SignupPage = () => {
         errors,
         showPass,
         viewPass
-    } = useFormData<ICreateUser>(createUser, url, "/congrats")
+    } = useFormData<ICreateUser>(createUser, url, "/send-verification")
 
     return (
         <section className="h-screen w-screen flex justify-center items-center">
