@@ -15,7 +15,9 @@ export class JwtService {
             name: data.name,
             email: data.email,
             iat: Math.floor(Date.now() / 1000)
-        }, this.tokenKey)
+        }, this.tokenKey, {
+            expiresIn: "1d"
+        })
 
         return accessToken
     }
@@ -24,7 +26,9 @@ export class JwtService {
         const accessToken = jwt.sign({
             sub: userId,
             iat: Math.floor(Date.now() / 1000)
-        }, this.vTokenKey)
+        }, this.vTokenKey, {
+            expiresIn: "3h"
+        })
 
         return accessToken
     }

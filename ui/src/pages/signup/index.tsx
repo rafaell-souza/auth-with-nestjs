@@ -8,7 +8,9 @@ import { ICreateUser } from "../../interfaces/ICreate-user";
 
 export const SignupPage = () => {
     const url = "http://localhost:3000/auth/signup";
-    const redirectUrl = "/verification/email-verification"
+    const redirectUrl = "/verification/email-verification";
+    const method = "POST";
+    const headers = { "Content-Type": "application/json" }
 
     const {
         register,
@@ -17,7 +19,13 @@ export const SignupPage = () => {
         errors,
         showPass,
         viewPass
-    } = useFormData<ICreateUser>(createUser, url, redirectUrl)
+    } = useFormData<ICreateUser>(
+        createUser, 
+        url, 
+        redirectUrl,
+        method,
+        headers
+    )
 
     return (
         <section className="h-screen w-screen flex justify-center items-center">
@@ -127,7 +135,6 @@ export const SignupPage = () => {
                         <p className="ml-2 text-xs">Sign in with google</p>
                     </Link>
                 </div>
-
             </form>
         </section >
     )

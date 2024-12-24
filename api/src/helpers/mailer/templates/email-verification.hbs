@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Email Verification</title>
 </head>
+
 <body style="font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f9f9f9;">
-  <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px;">
+  <div
+    style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px;">
     <h2 style="color: #333;">Hello, {{name}}</h2>
     <p style="color: #555;">
       Thank you for signing up! Please verify your email address to activate your account.
@@ -15,9 +18,9 @@
       Click the button below to verify your email:
     </p>
     <p>
-      <a href="https://example.com/verify-email?token={{token}}" 
-         style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 4px;">
-         Verify Email
+      <a href="http://localhost:5173/confirm/{{token}}"
+        style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 4px;">
+        Verify Email
       </a>
     </p>
     <p style="color: #777; font-size: 12px;">
@@ -25,4 +28,5 @@
     </p>
   </div>
 </body>
+
 </html>

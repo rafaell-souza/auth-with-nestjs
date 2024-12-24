@@ -5,14 +5,22 @@ import { emailSchema } from "../../schemas/email";
 
 export const SendPasswordVerification = () => {
     const url = "http://localhost:3000/auth/verification/send/forgot-password";
-    const redicrecTo = "/verification/forgot-password"
+    const redicrecTo = "/verification/forgot-password";
+    const method = "POST";
+    const headers = { "content-Type": "application/json" }
 
     const {
         register,
         errors,
         handleSubmitForm,
         statusCode
-    } = useFormData(emailSchema, url, redicrecTo);
+    } = useFormData(
+        emailSchema,
+        url,
+        redicrecTo,
+        method,
+        headers
+    );
 
     return (
         <section className="flex items-center justify-center w-full h-screen">

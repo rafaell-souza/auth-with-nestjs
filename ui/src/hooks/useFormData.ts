@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 export const useFormData = <T extends FieldValues>(
     schema: Zod.ZodType<T>,
     url: string,
-    redirectTo: string
+    redirectTo: string,
+    method: string,
+    headers: {}
 ) => {
     const [statusCode, setStatusCode] = useState<number>()
     const [viewPass, SetviewPass] = useState({
@@ -37,8 +39,8 @@ export const useFormData = <T extends FieldValues>(
 
     const handleSubmitForm = handleSubmit(async data => {
         const response = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+            method: method,
+            headers: headers,
             body: JSON.stringify(data)
         })
 

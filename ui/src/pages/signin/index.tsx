@@ -8,6 +8,9 @@ import { loginUser } from "../../schemas/login-user";
 
 export const SigninPage = () => {
     const url = "http://localhost:3000/auth/signin";
+    const redirectTo = "/congrats";
+    const method = "POST";
+    const headers = { "Content-Type": "application/json" }
 
     const {
         register,
@@ -16,7 +19,13 @@ export const SigninPage = () => {
         errors,
         viewPass,
         showPass
-    } = useFormData<ILoginUser>(loginUser, url, "/congrats")
+    } = useFormData<ILoginUser>(
+        loginUser, 
+        url, 
+        redirectTo,
+        method,
+        headers
+    )
 
     return (
         <section className="h-screen w-screen flex justify-center items-center">
@@ -50,7 +59,7 @@ export const SigninPage = () => {
                                     <p className="text-[10px] text-red-500">
                                         Incorrect email or password.
                                     </p>
-                                ) : statusCode === 404 ? (
+                                ) : statusCode !== 200 ? (
                                     <p className="text-[10px] text-red-500">
                                         Email is not signed up.
                                     </p>

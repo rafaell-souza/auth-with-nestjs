@@ -31,6 +31,7 @@ export class AuthController {
     }
 
     @Post("signin")
+    @HttpCode(200)
     async signin(@Body() dto: LoginUserDto) {
         const token = await this.authService.signin(dto);
         return { accessToken: token };
@@ -52,7 +53,7 @@ export class AuthController {
         return res.redirect(`http://localhost:5173/token=${token}`)
     }
 
-    @Throttle({ default: { limit: 6, ttl: 36000 } })
+    @Throttle({ default: { limit: 1, ttl: 16000 } })
     @HttpCode(200)
     @Post("verification/send/:templateName")
     async send(
@@ -66,7 +67,7 @@ export class AuthController {
         return { success: true, date: new Date(), email: email }
     }
 
-    @Throttle({ default: { limit: 3, ttl: 60000 } })
+    @Throttle({ default: { limit: 1, ttl: 10000 } })
     @Put("verification/confirm")
     @UseGuards(VerificationGuard)
     async confirmUser(@Request() request: any) {
@@ -75,7 +76,7 @@ export class AuthController {
         return { success: true, date: new Date() }
     }
 
-    @Throttle({ default: { limit: 3, ttl: 600000 } })
+    @Throttle({ default: { limit: 10, ttl: 300000 } })
     @Put("forgot-password")
     @UseGuards(VerificationGuard)
     async forgotPassword(
