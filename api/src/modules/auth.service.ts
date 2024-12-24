@@ -51,6 +51,8 @@ export class AuthService {
             subject: "Reset Password",
             token: vToken
         }, templateName)
+
+        return user.email;
     }
 
     async confirmUser(userId: string) {

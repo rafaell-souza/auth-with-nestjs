@@ -62,8 +62,8 @@ export class AuthController {
         if (!this.allowedTemplates.includes(templateName))
             throw new BadRequestException(`Tempate: ${templateName} in not valid`)
 
-        await this.authService.send(templateName, dto.email);
-        return { success: true, date: new Date() }
+        const email = await this.authService.send(templateName, dto.email);
+        return { success: true, date: new Date(), email: email }
     }
 
     @Throttle({ default: { limit: 3, ttl: 60000 } })

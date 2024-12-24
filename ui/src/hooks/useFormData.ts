@@ -46,7 +46,7 @@ export const useFormData = <T extends FieldValues>(
 
         if (response.ok) {
             const data = await response.json();
-            if (data?.email) sessionStorage.setItem("email", data.email)
+            if (data?.email) localStorage.setItem("email", data.email)
             navigate(redirectTo)
         }
     })

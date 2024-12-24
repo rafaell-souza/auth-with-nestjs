@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-export const Helper = (email: string) => {
+export const UseSendMail = () => {
     const [time, setTime] = useState<number>(60);
     const [isActive, setIsActive] = useState(false)
 
-    const url = "http://localhost:3000/auth/verification/send/email-verification"
+    const email = localStorage.getItem("email");
+    const { templateName } = useParams()
+
+    const url = `http://localhost:3000/auth/verification/send/${templateName}`
     const handlerEmail = async () => {
         await fetch(url, {
             method: "POST",
@@ -19,7 +23,7 @@ export const Helper = (email: string) => {
     }
 
     useEffect(() => {
-        let timer: ReturnType<typeof setInterval>
+        let timer: NodeJS.Timeout
 
         if (isActive) return;
         else {

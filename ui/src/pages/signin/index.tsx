@@ -8,6 +8,7 @@ import { loginUser } from "../../schemas/login-user";
 
 export const SigninPage = () => {
     const url = "http://localhost:3000/auth/signin";
+
     const {
         register,
         handleSubmitForm,
@@ -57,7 +58,9 @@ export const SigninPage = () => {
                             }
                         </div>
                         <p className="text-xs flex justify-end">
-                            <Link className="text-blue-700 text-[10px] hover:text-blue-400" to="/forgot-password">Forgot password</Link>
+                            <Link 
+                            className="text-blue-700 text-[10px] hover:text-blue-400" 
+                            to="/forgot-password">Forgot password</Link>
                         </p>
 
                     </div>
@@ -78,6 +81,10 @@ export const SigninPage = () => {
                 <button className="w-full bg-zinc-400 text-white hover:bg-opacity-70 h-7 mt-2 rounded">
                     CONFIRM
                 </button>
+                <p className="text-[10px] flex justify-center mt-[2px]">
+                    Don't have an account?
+                    <Link to="/signup" className="text-blue-700 text-[10px] hover:text-blue-400 ml-1">Sign up.</Link>
+                </p>
 
                 <div className="flex flex-col mt-1 items-center">
                     <p className="text-xs">OR</p>

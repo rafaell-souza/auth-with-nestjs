@@ -8,6 +8,8 @@ import { ICreateUser } from "../../interfaces/ICreate-user";
 
 export const SignupPage = () => {
     const url = "http://localhost:3000/auth/signup";
+    const redirectUrl = "/verification/email-verification"
+
     const {
         register,
         handleSubmitForm,
@@ -15,7 +17,7 @@ export const SignupPage = () => {
         errors,
         showPass,
         viewPass
-    } = useFormData<ICreateUser>(createUser, url, "/send-verification")
+    } = useFormData<ICreateUser>(createUser, url, redirectUrl)
 
     return (
         <section className="h-screen w-screen flex justify-center items-center">
@@ -107,17 +109,14 @@ export const SignupPage = () => {
                     </div>
                 </div>
 
-                <p className="text-xs flex justify-end">
-                    <Link
-                        to="/signin"
-                        className="text-blue-700 mt-[2px] text-[10px] hover:text-blue-400">
-                        Already have an account?
-                    </Link>
-                </p>
-
                 <button className="w-full bg-zinc-400 text-white hover:bg-opacity-70 h-7 mt-2 rounded">
                     CONFIRM
                 </button>
+
+                <p className="text-[10px] flex justify-center mt-[2px]">
+                    Already have an account?
+                    <Link to="/signin" className="text-blue-700 text-[10px] hover:text-blue-400 ml-1">Sign in.</Link>
+                </p>
 
                 <div className="flex flex-col mt-1 items-center">
                     <p className="text-xs">OR</p>

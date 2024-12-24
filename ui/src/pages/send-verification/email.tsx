@@ -1,8 +1,14 @@
-import { Helper } from "./helper";
+import { UseSendMail } from "../../hooks/useSendMail";
 
-export const SendVerificationPage = () => {
+export const SendEmailVerification = () => {
     const email = sessionStorage.getItem("email") ?? ""
-    const { time, isActive, handlerEmailSending } = Helper(email);
+    const templateName = "email-verification"
+
+    const {
+        time,
+        isActive,
+        handlerEmailSending
+    } = UseSendMail(email, templateName);
 
     return (
         <section className="flex items-center justify-center w-full h-screen bg-gray-50">
@@ -12,7 +18,7 @@ export const SendVerificationPage = () => {
                 </h1>
 
                 <p className="text-gray-700 text-center">
-                    Check your email box for the confirmation email
+                    Check your email box for the verification email
                 </p>
 
                 <div className="flex flex-col items-center">
